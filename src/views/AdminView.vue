@@ -5,7 +5,9 @@
         <h1>Admin</h1>
       </div>
       <div>
-        <button class="semibold">{{ buttonLabel }}</button>
+        <button class="semibold" @click="onAddNewResource">
+          {{ buttonLabel }}
+        </button>
       </div>
     </div>
 
@@ -42,8 +44,27 @@ export default {
       }
     },
   },
+  watch: {
+    activeTab() {
+      if (this.$route.query.newResource) {
+        this.$router.push({
+          query: {},
+        });
+      }
+    },
+  },
   mounted() {
     document.title = "Admin";
+  },
+  methods: {
+    onAddNewResource() {
+      const resource = this.activeTab.id.slice(0, -1);
+      this.$router.push({
+        query: {
+          newResource: resource,
+        },
+      });
+    },
   },
 };
 </script>
@@ -63,5 +84,10 @@ export default {
   border-radius: 25px;
   background: var(--main-color);
   color: white;
+  cursor: pointer;
+}
+
+.heading button:hover {
+  background: #128652;
 }
 </style>

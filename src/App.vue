@@ -5,10 +5,17 @@
       <nav>
         <ul>
           <li>
-            <router-link to="/">Home</router-link>
+            <router-link to="/" :class="{ active: $route.path === '/' }">
+              Home
+            </router-link>
           </li>
           <li>
-            <router-link to="/admin">Admin</router-link>
+            <router-link
+              to="/admin"
+              :class="{ active: $route.path === '/admin' }"
+            >
+              Admin
+            </router-link>
           </li>
         </ul>
       </nav>
@@ -64,7 +71,7 @@ ul > li > a:hover {
   background: rgba(66, 185, 131, 0.2);
 }
 
-nav a.router-link-exact-active {
+nav a.active {
   color: var(--main-color);
   border-right: 4px solid var(--main-color);
   background: rgba(66, 185, 131, 0.2);
