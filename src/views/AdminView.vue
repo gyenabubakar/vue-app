@@ -10,36 +10,23 @@
     </div>
 
     <div class="content">
-      <Tabs :tabs="tabs" :active-tab.sync="activeTab" />
+      <Resources :active-tab.sync="activeTab" />
     </div>
   </div>
 </template>
 
 <script>
 // the tilde (~) is an alias to /src
-import Tabs from "~/components/Tabs.vue";
-
-const tabs = [
-  {
-    id: "pdfs",
-    name: "PDF Files",
-  },
-  {
-    id: "html-snippets",
-    name: "HTML Snippets",
-  },
-  {
-    id: "links",
-    name: "Links",
-  },
-];
+import Resources from "~/components/Resources.vue";
+import tabs from "~/assets/tabs";
 
 export default {
   name: "AdminView",
-  components: { Tabs },
+  components: {
+    Resources,
+  },
   data() {
     return {
-      tabs,
       activeTab: tabs[0],
     };
   },
@@ -53,11 +40,6 @@ export default {
         default:
           return "Add New Link";
       }
-    },
-  },
-  watch: {
-    activeTab(tab) {
-      console.log(tab);
     },
   },
   mounted() {
