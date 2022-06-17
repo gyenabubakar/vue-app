@@ -2,6 +2,7 @@
 
 :root {
   --main-color: #42b983;
+  --main-color-dark: #128652;
 }
 
 * {
@@ -19,6 +20,11 @@ body {
 a {
   text-decoration: none;
 }
+
+button {
+  cursor: pointer;
+}
+
 .extrabold {
   font-weight: 800 !important;
 }
@@ -33,4 +39,21 @@ a {
 }
 .light {
   font-weight: 300;
+}
+
+input {
+  width: 100%;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  outline: none;
+}
+input,
+input::placeholder {
+  font-size: 16px;
+  font-weight: 500;
+  font-family: "Open Sans", sans-serif;
+}
+input:focus {
+  border: 1px solid var(--main-color);
 }

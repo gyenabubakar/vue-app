@@ -13,6 +13,8 @@
 
     <div class="content">
       <Resources :active-tab.sync="activeTab" />
+
+      <UploadDocForm />
     </div>
   </div>
 </template>
@@ -21,11 +23,13 @@
 // the tilde (~) is an alias to /src
 import Resources from "~/components/Resources.vue";
 import tabs from "~/assets/tabs";
+import UploadDocForm from "~/components/UploadDocForm.vue";
 
 export default {
   name: "AdminView",
   components: {
     Resources,
+    UploadDocForm,
   },
   data() {
     return {
@@ -88,6 +92,6 @@ export default {
 }
 
 .heading button:hover {
-  background: #128652;
+  background: var(--main-color-dark);
 }
 </style>
