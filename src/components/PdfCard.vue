@@ -60,7 +60,7 @@ export default {
 
 .center {
   text-align: center;
-  margin-top: 20px;
+  margin: 20px 0 10px;
 }
 
 .center button {
