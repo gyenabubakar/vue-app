@@ -17,7 +17,9 @@
         :active-tab.sync="activeTab"
       />
 
-      <UploadDocForm v-else />
+      <template v-else>
+        <Component :is="formComponent" />
+      </template>
     </div>
   </div>
 </template>
@@ -27,12 +29,16 @@
 import Resources from "~/components/Resources.vue";
 import tabs from "~/assets/tabs";
 import UploadDocForm from "~/components/UploadDocForm.vue";
+import AddLinkForm from "~/components/AddLinkForm.vue";
+import AddHtmlSnippetForm from "~/components/AddHtmlSnippetForm.vue";
 
 export default {
   name: "AdminView",
   components: {
     Resources,
     UploadDocForm,
+    AddLinkForm,
+    AddHtmlSnippetForm,
   },
   data() {
     return {
@@ -70,6 +76,16 @@ export default {
           return "Add New HTML Snippet";
         default:
           return "Add New Link";
+      }
+    },
+    formComponent() {
+      switch (this.$route.query.newResource) {
+        case "pdf":
+          return "UploadDocForm";
+        case "html-snippet":
+          return "AddHtmlSnippetForm";
+        default:
+          return "AddLinkForm";
       }
     },
   },

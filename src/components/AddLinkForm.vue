@@ -1,31 +1,28 @@
 <template>
   <form @submit.prevent="onSubmit" autocomplete="off">
     <div class="form-field">
-      <label for="pdf-title">Title</label>
+      <label for="link-title">Title</label>
       <input
-        id="pdf-title"
+        id="link-title"
         type="text"
         v-model="title"
         required
-        placeholder="Enter a title for your PDF"
+        placeholder="Enter the link title"
       />
     </div>
-    <div class="form-field file">
-      <div>
-        <label for="pdf-file">Choose PDF document</label>
-        <button v-if="file" class="semibold" @click="onRemoveFile">
-          Remove
-        </button>
-      </div>
+    <div class="form-field">
+      <label for="link-url">URL</label>
       <input
-        ref="fileInput"
-        id="pdf-file"
-        type="file"
-        accept=".pdf"
+        id="link-url"
+        type="text"
+        v-model="url"
         required
-        placeholder="Choose a file"
-        @change="onFileChange"
+        placeholder="Enter URL"
       />
+    </div>
+    <div class="form-field">
+      <input type="checkbox" id="open-new-tab" v-model="openInNewTab" />
+      <label for="open-new-tab"> Open in new tab </label>
     </div>
 
     <div class="btn-wrapper">
@@ -36,32 +33,29 @@
 
 <script>
 export default {
-  name: "UploadDocForm",
+  name: "AddLinkForm",
   data() {
     return {
       title: "",
-      file: null,
+      url: "",
+      openInNewTab: false,
     };
   },
   methods: {
-    onRemoveFile() {
-      this.file = null;
-      this.$refs.fileInput.value = "";
-    },
-    onFileChange(e) {
-      this.file = e.target.files[0];
-    },
     onSubmit() {
-      if (this.file && this.title) {
-        const { title, file } = this;
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("file", file);
+      if (this.url && this.title) {
+        const { title, url, openInNewTab } = this;
+        // eslint-disable-next-line no-unused-vars
+        const formData = {
+          title,
+          url,
+          openInNewTab,
+        };
 
         /* This component is used for editing and adding new content.
           So, check if there's a query param called `edit` whose value is a resource ID.
-          If it exists, then we're editing an existing PDF file. (POST)
-          If it exists, then we're adding a new PDF file. (PATCH)
+          If it exists, then we're editing an existing link. (POST)
+          If it exists, then we're adding a new link. (PATCH)
 
           if (this.$route.query.edit) {
             try {
@@ -113,38 +107,8 @@ form {
   font-weight: 500;
 }
 
-.form-field.file > div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.form-field.file > div > button {
-  color: var(--main-color);
-  background: transparent;
-  border: 0;
-  outline: 0;
-}
-.form-field.file > div > button:hover {
-  color: var(--main-color-dark);
-}
-
 .btn-wrapper {
   margin-top: 50px;
   text-align: center;
-}
-
-.btn-wrapper button {
-  border: 0;
-  outline: 0;
-  padding: 10px 35px;
-  border-radius: 25px;
-  background: var(--main-color);
-  color: white;
-  cursor: pointer;
-}
-
-.btn-wrapper button:hover {
-  background: var(--main-color-dark);
 }
 </style>

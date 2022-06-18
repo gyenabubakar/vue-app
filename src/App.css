@@ -41,7 +41,8 @@ button {
   font-weight: 300;
 }
 
-input {
+input:not([type="checkbox"]),
+textarea {
   width: 100%;
   padding: 10px 20px;
   border: 1px solid #ccc;
@@ -49,12 +50,28 @@ input {
   outline: none;
   background: white;
 }
-input,
-input::placeholder {
+input:not([type="checkbox"]),
+textarea,
+input:not([type="checkbox"])::placeholder,
+textarea::placeholder {
   font-size: 16px;
   font-weight: 500;
   font-family: "Open Sans", sans-serif;
 }
-input:focus {
+input:not([type="checkbox"]):focus {
   border: 1px solid var(--main-color);
+}
+
+button[type="submit"] {
+  border: 0;
+  outline: 0;
+  padding: 10px 35px;
+  border-radius: 25px;
+  background: var(--main-color);
+  color: white;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background: var(--main-color-dark);
 }
