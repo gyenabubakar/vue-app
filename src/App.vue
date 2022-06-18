@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <aside>
+      <br />
       <h1>Test App</h1>
+      <br />
+
       <nav>
         <ul>
           <li>

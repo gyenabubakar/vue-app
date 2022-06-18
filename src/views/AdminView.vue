@@ -1,5 +1,9 @@
 <template>
   <div class="about">
+    <button v-if="$route.query.newResource" class="back" @click="onGoBack">
+      &lt;&nbsp;&nbsp;Go Back
+    </button>
+
     <div class="heading">
       <div>
         <h1>{{ pageTitle }}</h1>
@@ -18,9 +22,9 @@
         on-admin-route
       />
 
-      <template v-else>
+      <div v-else class="form">
         <Component :is="formComponent" />
-      </template>
+      </div>
     </div>
   </div>
 </template>
@@ -108,6 +112,11 @@ export default {
     document.title = this.pageTitle;
   },
   methods: {
+    onGoBack() {
+      this.$router.push({
+        query: {},
+      });
+    },
     onAddNewResource() {
       const resource = this.activeTab.id.slice(0, -1);
       this.$router.push({
@@ -140,5 +149,20 @@ export default {
 
 .heading button:hover {
   background: var(--main-color-dark);
+}
+
+button.back {
+  background: transparent;
+  color: var(--main-color);
+  font-size: 1rem;
+  font-weight: 600;
+  border: 0;
+  padding: 0;
+  display: inline-block;
+  margin-block: 20px;
+}
+
+.content .form {
+  margin-top: 5rem;
 }
 </style>
