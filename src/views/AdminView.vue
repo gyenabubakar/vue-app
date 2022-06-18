@@ -15,6 +15,7 @@
       <Resources
         v-if="!$route.query.newResource"
         :active-tab.sync="activeTab"
+        on-admin-route
       />
 
       <template v-else>
