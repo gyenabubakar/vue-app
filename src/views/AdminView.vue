@@ -2,9 +2,9 @@
   <div class="about">
     <div class="heading">
       <div>
-        <h1>Admin</h1>
+        <h1>{{ pageTitle }}</h1>
       </div>
-      <div>
+      <div v-if="!$route.query.newResource">
         <button class="semibold" @click="onAddNewResource">
           {{ buttonLabel }}
         </button>
@@ -12,9 +12,12 @@
     </div>
 
     <div class="content">
-      <Resources :active-tab.sync="activeTab" />
+      <Resources
+        v-if="!$route.query.newResource"
+        :active-tab.sync="activeTab"
+      />
 
-      <UploadDocForm />
+      <UploadDocForm v-else />
     </div>
   </div>
 </template>
@@ -37,6 +40,28 @@ export default {
     };
   },
   computed: {
+    pageTitle() {
+      if (this.$route.query.newResource) {
+        switch (this.$route.query.newResource) {
+          case "pdf":
+            if (this.$route.query.edit) {
+              return "Edit PDF Info";
+            }
+            return "Upload PDF";
+          case "html-snippet":
+            if (this.$route.query.edit) {
+              return "Edit HTML Snippet";
+            }
+            return "Add HTML Snippet";
+          default:
+            if (this.$route.query.edit) {
+              return "Edit Link";
+            }
+            return "Add New Link";
+        }
+      }
+      return "Admin";
+    },
     buttonLabel() {
       switch (this.activeTab.id) {
         case "pdfs":
@@ -56,9 +81,14 @@ export default {
         });
       }
     },
+    pageTitle(title) {
+      this.$nextTick(() => {
+        document.title = title;
+      });
+    },
   },
   mounted() {
-    document.title = "Admin";
+    document.title = this.pageTitle;
   },
   methods: {
     onAddNewResource() {

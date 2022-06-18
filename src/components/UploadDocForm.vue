@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSubmit">
+  <form @submit.prevent="onSubmit" autocomplete="off">
     <div class="form-field">
       <label for="pdf-title">Title</label>
       <input
@@ -70,7 +70,7 @@ form {
 }
 
 .form-field {
-  margin-bottom: 1rem;
+  margin-bottom: 1.3rem;
 }
 
 .form-field label {

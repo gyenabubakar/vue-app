@@ -47,6 +47,7 @@ input {
   border: 1px solid #ccc;
   border-radius: 10px;
   outline: none;
+  background: white;
 }
 input,
 input::placeholder {
