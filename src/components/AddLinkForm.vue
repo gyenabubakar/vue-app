@@ -41,6 +41,27 @@ export default {
       openInNewTab: false,
     };
   },
+  created() {
+    /* Check if there's a query param called `edit` whose value is a link ID.
+     * If it exists, then we're editing an existing link, so fetch it's data and populate the form.
+
+      if (this.$route.query.edit) {
+        const linkId = this.$route.query.edit;
+        axios
+          .get(`/api/links/${linkId}`)
+          .then((response) => {
+            const link = response.data;
+            this.title = link.title;
+            this.url = link.url;
+            this.openInNewTab = link.openInNewTab;
+          })
+          .catch((error) => {
+            //  --> show error
+          });
+      }
+
+    */
+  },
   methods: {
     onSubmit() {
       if (this.url && this.title) {
@@ -53,9 +74,9 @@ export default {
         };
 
         /* This component is used for editing and adding new content.
-          So, check if there's a query param called `edit` whose value is a resource ID.
-          If it exists, then we're editing an existing link. (POST)
-          If it exists, then we're adding a new link. (PATCH)
+         * So, check if there's a query param called `edit` whose value is a resource ID.
+         * If it exists, then we're editing an existing link. (POST)
+         * If it exists, then we're adding a new link. (PATCH)
 
           if (this.$route.query.edit) {
             try {

@@ -47,7 +47,26 @@ export default {
       code: "",
     };
   },
-  created() {},
+  created() {
+    /* Check if there's a query param called `edit` whose value is a snippet ID.
+     * If it exists, then we're editing an existing snippet, so fetch it's data and populate the form.
+      
+      if (this.$route.query.edit) {
+        const snippetId = this.$route.query.edit;
+        axios
+          .get(`/api/snippets/${snippetId}`)
+          .then((response) => {
+            const snippet = response.data;
+            this.title = snippet.title;
+            this.description = snippet.description;
+            this.code = snippet.code;
+          })
+          .catch((error) => {
+            //  --> show error
+          });
+      }
+    */
+  },
   methods: {
     async onSubmit() {
       const { title, description, code } = this;
@@ -59,9 +78,9 @@ export default {
       };
 
       /* This component is used for editing and adding new content.
-        So, check if there's a query param called `edit` whose value is a resource ID.
-        If it exists, then we're editing an existing snippet. (POST)
-        If it exists, then we're adding a new snippet. (PATCH)
+       * So, check if there's a query param called `edit` whose value is a resource ID.
+       * If it exists, then we're editing an existing snippet. (POST)
+       * If it exists, then we're adding a new snippet. (PATCH)
 
         if (this.$route.query.edit) {
           try {

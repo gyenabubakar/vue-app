@@ -13,7 +13,11 @@
     <div class="form-field file">
       <div>
         <label for="pdf-file">Choose PDF document</label>
-        <button v-if="file" class="semibold" @click="onRemoveFile">
+        <button
+          v-if="file || existingPdfUrl"
+          class="semibold"
+          @click="onRemoveFile"
+        >
           Remove
         </button>
       </div>
@@ -41,33 +45,63 @@ export default {
     return {
       title: "",
       file: null,
+      existingPdfUrl: null,
     };
+  },
+  created() {
+    /* Check if there's a query param called `edit` whose value is a PDF ID.
+     * If it exists, then we're editing an existing PDF, so fetch it's data and populate the form.
+
+      if (this.$route.query.edit) {
+        const linkId = this.$route.query.edit;
+        axios
+          .get(`/api/links/${linkId}`)
+          .then((response) => {
+            const pdf = response.data;
+            this.title = pdf.title;
+            this.existingPdfUrl = pdf.url;
+          })
+          .catch((error) => {
+            //  --> show error
+          });
+      }
+
+    */
   },
   methods: {
     onRemoveFile() {
       this.file = null;
       this.$refs.fileInput.value = "";
+      this.existingPdfUrl = null;
     },
     onFileChange(e) {
       this.file = e.target.files[0];
     },
     onSubmit() {
-      if (this.file && this.title) {
+      if ((this.file || this.existingPdfUrl) && this.title) {
         const { title, file } = this;
         const formData = new FormData();
         formData.append("title", title);
-        formData.append("file", file);
+        // appending file only if it exists
+        if (this.file) {
+          formData.append("file", file);
+        }
 
         /* This component is used for editing and adding new content.
-          So, check if there's a query param called `edit` whose value is a resource ID.
-          If it exists, then we're editing an existing PDF file. (POST)
-          If it exists, then we're adding a new PDF file. (PATCH)
+         * So, check if there's a query param called `edit` whose value is a resource ID.
+         * If it exists, then we're editing an existing PDF file. (POST)
+         * If it exists, then we're adding a new PDF file. (PATCH)
 
           if (this.$route.query.edit) {
             try {
               await axios.patch(
                 `/api/snippets/${this.$route.query.edit}`,
-                formData
+                formData,
+                {
+                  headers: {
+                    "Content-Type": "multipart/form-data",
+                  },
+                }
               )
 
               // --> leave the current FORM screen on success
